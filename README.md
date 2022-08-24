@@ -1,2 +1,2 @@
-# vwms
-Voting-Workshop Management System for Worldskills
+# Voting-Workshop Management System
+Worldskills Project - improved.
