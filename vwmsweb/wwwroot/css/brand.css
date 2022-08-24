@@ -12,6 +12,14 @@ body {
   box-shadow: 0 0 10px 1px #bbbbbbbb !important;
 }
 
+.btn-blur:hover {
+  box-shadow: 0 0 5px 1px #bbbb !important;
+}
+
+.btn-blur:active {
+  box-shadow: 0 0 5px 1px #cccc !important;
+}
+
 /* For modals - the content background, not just the dismissible background */
 .bg-blur-light {
   background-color: #ffffff66;
