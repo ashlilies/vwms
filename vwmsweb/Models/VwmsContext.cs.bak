@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
+﻿using Microsoft.EntityFrameworkCore;
 
 namespace vwmsweb.Models
 {
@@ -53,21 +50,27 @@ namespace vwmsweb.Models
             {
                 entity.ToTable("Category");
 
-                entity.Property(e => e.Name).HasMaxLength(50);
+                entity.Property(e => e.Name)
+                    .HasMaxLength(20)
+                    .IsFixedLength();
             });
 
             modelBuilder.Entity<Saloon>(entity =>
             {
                 entity.ToTable("Saloon");
 
-                entity.Property(e => e.Name).HasMaxLength(50);
+                entity.Property(e => e.Name)
+                    .HasMaxLength(20)
+                    .IsFixedLength();
             });
 
             modelBuilder.Entity<Status>(entity =>
             {
                 entity.ToTable("Status");
 
-                entity.Property(e => e.Name).HasMaxLength(50);
+                entity.Property(e => e.Name)
+                    .HasMaxLength(15)
+                    .IsFixedLength();
             });
 
             modelBuilder.Entity<Survey>(entity =>
@@ -76,7 +79,9 @@ namespace vwmsweb.Models
 
                 entity.Property(e => e.EndDate).HasColumnType("date");
 
-                entity.Property(e => e.Name).HasMaxLength(200);
+                entity.Property(e => e.Name)
+                    .HasMaxLength(200)
+                    .IsFixedLength();
 
                 entity.Property(e => e.StartDate).HasColumnType("date");
             });
@@ -85,7 +90,9 @@ namespace vwmsweb.Models
             {
                 entity.ToTable("SurveyChoice");
 
-                entity.Property(e => e.Name).HasMaxLength(200);
+                entity.Property(e => e.Name)
+                    .HasMaxLength(200)
+                    .IsFixedLength();
             });
 
             modelBuilder.Entity<SurveyResponse>(entity =>
@@ -102,17 +109,15 @@ namespace vwmsweb.Models
             {
                 entity.ToTable("User");
 
-                entity.Property(e => e.FullName).HasMaxLength(100);
-
                 entity.Property(e => e.PasswordHash)
                     .HasMaxLength(128)
                     .IsFixedLength();
 
-                entity.Property(e => e.PersonalIdentifier).HasMaxLength(50);
-
-                entity.Property(e => e.Telephone).HasMaxLength(50);
-
-                entity.Property(e => e.Username).HasMaxLength(50);
+                entity.Property(e => e.Username)
+                    .HasMaxLength(20)
+                    .IsFixedLength();
+                
+                entity.
             });
 
             modelBuilder.Entity<Workshop>(entity =>
@@ -121,7 +126,9 @@ namespace vwmsweb.Models
 
                 entity.Property(e => e.Date).HasColumnType("date");
 
-                entity.Property(e => e.Name).HasMaxLength(50);
+                entity.Property(e => e.Name)
+                    .HasMaxLength(30)
+                    .IsFixedLength();
 
                 entity.HasOne(d => d.Category)
                     .WithMany(p => p.Workshops)

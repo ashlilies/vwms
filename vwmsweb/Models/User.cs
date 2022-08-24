@@ -14,6 +14,9 @@ namespace vwmsweb.Models
         public string Username { get; set; } = null!;
         public string PasswordHash { get; set; } = null!;
         public bool IsManager { get; set; }
+        public string FullName { get; set; } = null!;
+        public string PersonalIdentifier { get; set; } = null!;
+        public string Telephone { get; set; } = null!;
 
         public virtual ICollection<Workshop> Workshops { get; set; }
     }

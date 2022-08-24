@@ -14,7 +14,7 @@ public class UserService
         return user;
     }
 
-    private string HashPassword(string password)
+    private static string HashPassword(string password)
     {
         using var md5 = System.Security.Cryptography.MD5.Create();
         var inputBytes = System.Text.Encoding.ASCII.GetBytes(password);

@@ -2,6 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using vwmsweb.Utils;
 using vwmsweb.Services;
 
 namespace vwmsweb.Pages;
@@ -25,16 +26,27 @@ public class IndexModel : PageModel
 
     private readonly ILogger<IndexModel> _logger;
 
-    private static readonly string ManagerLoginRedirect = "/"; // to be changed
-    private static readonly string ExhibitorLoginRedirect = "/";
+    private static readonly string ManagerLoginRedirect = "/Manager";
+    private static readonly string ExhibitorLoginRedirect = "/Exhibitor";
 
     public IndexModel(ILogger<IndexModel> logger)
     {
         _logger = logger;
     }
 
-    public void OnGet()
+    public IActionResult OnGet()
     {
+        if (SessionUtil.AuthorizeExhibitor(HttpContext))
+        {
+            return Redirect(ExhibitorLoginRedirect);
+        }
+
+        if (SessionUtil.AuthorizeManager(HttpContext))
+        {
+            return Redirect(ManagerLoginRedirect);
+        }
+
+        return Page();
     }
 
     public IActionResult OnPost(UserService svc)
@@ -51,6 +63,7 @@ public class IndexModel : PageModel
             return Page();
         }
 
-        return Redirect(user.IsManager ? ManagerLoginRedirect : ExhibitorLoginRedirect);
+        SessionUtil.SetUser(HttpContext, user);
+        return RedirectToPage();
     }
 }
