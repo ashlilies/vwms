@@ -8,16 +8,15 @@ body {
 .bg-blur, .btn-blur {
   background-color: #ffffff33;
   backdrop-filter: blur(8px);
-}
-
-.btn {
+  border-radius: 15px;
   box-shadow: 0 0 10px 1px #bbbbbbbb !important;
 }
 
-.form-control, .form-control:focus, .dropdown-menu {
+.form-control, .form-control:focus, .dropdown-menu, .table {
   background-color: #ffffff33;
   backdrop-filter: blur(2px);
   box-shadow: 0 0 10px 1px #bbbbbbbb !important;
+  border-radius: 15px;
 }
 
 .btn-blur:hover {
@@ -32,4 +31,8 @@ body {
   color: black;
   outline-color: #fffb;
   background-color: #fffb;
+}
+
+th, td {
+  padding: 0.8rem !important;
 }
