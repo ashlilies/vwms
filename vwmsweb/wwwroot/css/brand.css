@@ -34,6 +34,7 @@ body {
 
 .modal-backdrop {
   opacity: 0 !important;
+  /*opacity: 0.05 !important;*/
 }
 
 .form-control, .form-control:focus, .table {
@@ -67,4 +68,5 @@ th, td {
  */
 nav {
   z-index: 1000;
+  
 }
