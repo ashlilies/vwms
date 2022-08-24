@@ -12,6 +12,18 @@ body {
   box-shadow: 0 0 10px 1px #bbbbbbbb !important;
 }
 
+/* For modals - the content background, not just the dismissible background */
+.bg-blur-light {
+  background-color: #ffffff66;
+  backdrop-filter: blur(8px);
+  border-radius: 15px;
+  box-shadow: 0 0 10px 1px #bbbbbbbb !important;
+}
+
+.modal-backdrop {
+  opacity: 0 !important;
+}
+
 .form-control, .form-control:focus, .dropdown-menu, .table {
   background-color: #ffffff33;
   backdrop-filter: blur(2px);

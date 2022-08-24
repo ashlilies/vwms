@@ -1,11 +1,12 @@
-﻿<!DOCTYPE html>
+﻿@using vwmsweb.Utils
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>@ViewData["Title"]</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css"/>
-        <link rel="stylesheet" href="~/lib/font-awesome/fontawesome.min.css" asp-append-version="true"/>
+    <link rel="stylesheet" href="~/lib/font-awesome/fontawesome.min.css" asp-append-version="true"/>
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true"/>
     <link rel="stylesheet" href="~/css/brand.css" asp-append-version="true"/>
     <link rel="stylesheet" href="~/vwmsweb.styles.css" asp-append-version="true"/>
@@ -37,6 +38,7 @@
                                 </a>
                                 <ul class="dropdown-menu">
                                     <li>
+                                        <a class="dropdown-item text-reset" href="#" data-bs-toggle="modal" data-bs-target="#account-settings-modal">My Account</a>
                                         <a class="dropdown-item" asp-page="/Logout">Logout</a>
                                     </li>
                                 </ul>
@@ -47,6 +49,57 @@
             </div>
         </div>
     </nav>
+    <div class="modal fade bg-blur" id="account-settings-modal">
+        <div class="modal-dialog">
+            <div class="modal-content bg-blur-light">
+                <div class="modal-header">
+                    <h5 class="modal-title">Account Information</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    @{
+                        var user = SessionUtil.GetUser(Context);
+                        if (user != null)
+                        {
+                            <text>
+                                <div class="mb-3">
+                                    <label for="username-setting" class="form-label">Username</label>
+                                    <input type="text" id="username-setting" class="form-control" value="@user.Username" readonly/>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="username-setting" class="form-label">Account Type</label>
+                                    @if (user.IsManager)
+                                    {
+                                        <input type="text" id="username-setting" class="form-control" value="Manager" readonly/>
+                                    }
+                                    else
+                                    {
+                                        <input type="text" id="username-setting" class="form-control" value="Exhibitor" readonly/>
+                                    }
+                                </div>
+                                <div class="mb-3">
+                                    <label for="username-setting" class="form-label">Full Name</label>
+                                    <input type="text" id="username-setting" class="form-control" value="@user.FullName" readonly/>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="username-setting" class="form-label">Personal Identification</label>
+                                    <input type="text" id="username-setting" class="form-control" value="@user.PersonalIdentifier" readonly/>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="username-setting" class="form-label">Telephone</label>
+                                    <input type="text" id="username-setting" class="form-control" value="@user.Telephone" readonly/>
+                                </div>
+                            </text>
+                        }
+                    }
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-blur" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </header>
 <div class="container">
     <main role="main" class="pb-3">
