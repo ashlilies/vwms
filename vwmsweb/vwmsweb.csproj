@@ -15,4 +15,9 @@
       </PackageReference>
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Pages\Exhibitor" />
+      <Folder Include="Pages\Manager" />
+    </ItemGroup>
+
 </Project>
