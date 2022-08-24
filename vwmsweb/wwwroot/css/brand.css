@@ -5,7 +5,7 @@ body {
   background-size: cover;
 }
 
-.bg-blur, .btn-blur {
+.bg-blur, .btn-blur, .dropdown-menu {
   background-color: #ffffff33;
   backdrop-filter: blur(8px);
   border-radius: 15px;
@@ -24,7 +24,7 @@ body {
   opacity: 0 !important;
 }
 
-.form-control, .form-control:focus, .dropdown-menu, .table {
+.form-control, .form-control:focus, .table {
   background-color: #ffffff33;
   backdrop-filter: blur(2px);
   box-shadow: 0 0 10px 1px #bbbbbbbb !important;
@@ -47,4 +47,12 @@ body {
 
 th, td {
   padding: 0.8rem !important;
+}
+
+/* 
+ * To fix content overlapping navbar (doesn't affect modals) 
+ * Why isn't this included by default?
+ */
+nav {
+  z-index: 1000;
 }
