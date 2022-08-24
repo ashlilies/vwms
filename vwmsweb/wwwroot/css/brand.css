@@ -12,6 +12,10 @@ body {
   box-shadow: 0 0 10px 1px #bbbbbbbb !important;
 }
 
+.rounded-reset {
+  border-radius: 0 !important;
+}
+
 .btn-blur:hover {
   box-shadow: 0 0 5px 1px #bbbb !important;
 }
