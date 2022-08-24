@@ -1,9 +1,17 @@
 using dotenv.net;
+using Microsoft.AspNetCore.Server.Kestrel.Core;
 using vwmsweb.Services;
 
 DotEnv.Load();
 
 var builder = WebApplication.CreateBuilder(args);
+
+// Listen on any URL
+// builder.WebHost.ConfigureKestrel(options =>
+// {
+//     options.ListenAnyIP(7199);
+//     options.ListenAnyIP(5159);
+// });
 
 // Add services to the container.
 builder.Services.AddRazorPages();

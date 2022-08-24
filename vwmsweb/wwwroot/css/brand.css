@@ -1,0 +1,22 @@
+body {
+  background-image: url("/images/background.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.bg-blur, .btn-blur {
+  background-color: #ffffff33;
+  backdrop-filter: blur(8px);
+  box-shadow: 0 0 10px 1px #bbbbbbbb !important;
+}
+
+.form-control, .form-control:focus {
+  background-color: #ffffff33;
+  backdrop-filter: blur(2px);
+  box-shadow: 0 0 10px 1px #bbbbbbbb !important;
+}
+
+.btn-blur:hover {
+  
+}
