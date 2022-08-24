@@ -11,7 +11,7 @@ body {
   box-shadow: 0 0 10px 1px #bbbbbbbb !important;
 }
 
-.form-control, .form-control:focus {
+.form-control, .form-control:focus, .dropdown-menu {
   background-color: #ffffff33;
   backdrop-filter: blur(2px);
   box-shadow: 0 0 10px 1px #bbbbbbbb !important;
@@ -19,4 +19,14 @@ body {
 
 .btn-blur:hover {
   
+}
+
+*:focus {
+  outline-color: #bbbbbbbb;
+}
+
+.dropdown-item:active {
+  color: black;
+  outline-color: #fffb;
+  background-color: #fffb;
 }
