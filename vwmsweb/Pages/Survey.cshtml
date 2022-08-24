@@ -2,53 +2,74 @@
 @model vwmsweb.Pages.SurveyModel
 
 @{
-    ViewData["Title"] = "Survey";
+    ViewData["Title"] = "Surveys";
 }
 
-<h1>Survey</h1>
+<div class="d-flex my-auto bd-highlight mb-3">
+    <div class="p-2 bd-highlight">
+        <h1>Surveys</h1>
+    </div>
+    @if (@HttpContext.Session.GetInt32("IsManager") == 1)
+    {
+        <div class="ms-auto p-2 bd-highlight my-auto align-middle">
+            <a class="btn btn-blur" asp-page="SurveyCreate"><i class="fa-solid fa-plus fa-xl align-middle pb-2"></i>&nbsp;Create</a>
+        </div>
+    }
+</div>
 
-<p>
-    <a asp-page="Create">Create New</a>
-</p>
 <table class="table">
     <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Survey[0].Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Survey[0].StartDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Survey[0].EndDate)
-            </th>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Survey[0].Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Survey[0].StartDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Survey[0].EndDate)
+        </th>
+        @if (@HttpContext.Session.GetInt32("IsManager") == 1)
+        {
             <th>
                 @Html.DisplayNameFor(model => model.Survey[0].IsEnabled)
             </th>
-            <th></th>
-        </tr>
+        }
+        <th></th>
+    </tr>
     </thead>
     <tbody>
-@foreach (var item in Model.Survey) {
+    @foreach (var item in Model.Survey)
+    {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.Name)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.StartDate)
+                @item.StartDate.ToLongDateString()
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.EndDate)
+                @item.EndDate.ToLongDateString()
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IsEnabled)
-            </td>
-            <td>
-                <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
+            @if (@HttpContext.Session.GetInt32("IsManager") == 1)
+            {
+                <td>
+                    @Html.DisplayFor(modelItem => item.IsEnabled)
+                </td>
+            }
+            @if (@HttpContext.Session.GetInt32("IsManager") == 1)
+            {
+                <td>
+                    <a class="btn btn-blur" asp-page="SurveyVote">View Results</a>
+                </td>
+            }
+            else
+            {
+                <td>
+                    <a class="btn btn-blur" asp-page="SurveyVote">Vote</a>
+                </td>
+            }
         </tr>
-}
+    }
     </tbody>
 </table>

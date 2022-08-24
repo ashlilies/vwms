@@ -15,6 +15,11 @@ public static class SessionUtil
 
         return null;
     }
+
+    public static int? GetUserId(HttpContext context)
+    {
+        return context.Session.GetInt32("UserId");
+    }
     
     public static void SetUser(HttpContext context, User user)
     {
@@ -58,6 +63,7 @@ public static class SessionUtil
 
     public static bool Authorize(HttpContext context)
     {
-        return context.Session.GetInt32("UserId") != null;
+        // return context.Session.GetInt32("UserId") != null;
+        return GetUser(context) != null;  // workaround for deleting db rows while logged in edge case
     }
 }

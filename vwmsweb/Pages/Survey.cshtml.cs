@@ -28,7 +28,7 @@ namespace vwmsweb.Pages
                 return Redirect(Constants.UnauthorizedRedirect);
             }
             
-            if (_context.Surveys != null!)
+            if (_context.Surveys != null)
             {
                 Survey = await _context.Surveys.ToListAsync();
             }

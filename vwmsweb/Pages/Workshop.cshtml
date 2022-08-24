@@ -2,14 +2,19 @@
 @model vwmsweb.Pages.WorkshopModel
 
 @{
-    ViewData["Title"] = "Workshop";
+    ViewData["Title"] = "Workshops";
 }
 
-<h1>Workshop</h1>
+<div class="d-flex my-auto bd-highlight mb-3">
+    <div class="p-2 bd-highlight"><h1>Workshop Requests</h1></div>
+        @if (@HttpContext.Session.GetInt32("IsManager") == 0)
+        {
+            <div class="ms-auto p-2 bd-highlight my-auto align-middle">
+                <a class="btn btn-blur" asp-page="WorkshopCreate"><i class="fa-solid fa-plus fa-xl align-middle pb-2"></i>&nbsp;Create</a>
+            </div>
+        }
+</div>
 
-<p>
-    <a asp-page="Create">Create New</a>
-</p>
 <table class="table">
     <thead>
         <tr>
@@ -20,14 +25,14 @@
                 @Html.DisplayNameFor(model => model.Workshop[0].Date)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Workshop[0].HasWarned)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.Workshop[0].Category)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Workshop[0].Exhibitor)
-            </th>
+            @if (HttpContext.Session.GetInt32("IsManager") == 1)
+            {
+                <th>
+                    @Html.DisplayNameFor(model => model.Workshop[0].Exhibitor)
+                </th>
+            }
             <th>
                 @Html.DisplayNameFor(model => model.Workshop[0].Saloon)
             </th>
@@ -47,30 +52,40 @@
                 @Html.DisplayFor(modelItem => item.Name)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Date)
+                @item.Date.ToLongDateString()
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.HasWarned)
+                @Html.DisplayFor(modelItem => item.Category.Name)
+            </td>
+            @if (HttpContext.Session.GetInt32("IsManager") == 1)
+            {
+                <td>
+                    @Html.DisplayFor(modelItem => item.Exhibitor.FullName)
+                </td>
+            }
+            <td>
+                @Html.DisplayFor(modelItem => item.Saloon.Name)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Category.Id)
+                @Html.DisplayFor(modelItem => item.Status.Name)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Exhibitor.Id)
+                @Html.DisplayFor(modelItem => item.Time.StartTime) - @Html.DisplayFor(modelItem => item.Time.EndTime)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Saloon.Id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Status.Id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Time.Id)
-            </td>
-            <td>
-                <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+                @if (HttpContext.Session.GetInt32("IsManager") == 1)
+                {
+                    <a class="btn btn-blur" asp-page="Workshop">Accept</a>
+                    <a class="btn btn-blur" asp-page="Workshop">Reject</a>
+                }
+                else
+                {
+                    @if (item.Status.Name == "Pending" && HttpContext.Session.GetInt32("UserId") == @item.ExhibitorId)
+                    {
+                        <a class="btn btn-blur" asp-page="WorkshopEdit">Edit</a>
+                        <a class="btn btn-blur" asp-page="WorkshopDelete">Delete</a>
+                    }
+                }
             </td>
         </tr>
 }

@@ -36,6 +36,11 @@ namespace vwmsweb.Pages
                 .Include(w => w.Saloon)
                 .Include(w => w.Status)
                 .Include(w => w.Time).ToListAsync();
+
+                if (SessionUtil.AuthorizeExhibitor(HttpContext))
+                {
+                    Workshop = Workshop.Where(w => w.ExhibitorId == SessionUtil.GetUserId(HttpContext)).ToList();
+                }
             }
 
             return Page();
