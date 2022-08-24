@@ -26,8 +26,8 @@ public class IndexModel : PageModel
 
     private readonly ILogger<IndexModel> _logger;
 
-    private static readonly string ManagerLoginRedirect = "/Manager";
-    private static readonly string ExhibitorLoginRedirect = "/Exhibitor";
+    private static readonly string ManagerLoginRedirect = "/Survey";
+    private static readonly string ExhibitorLoginRedirect = "/Survey";
 
     public IndexModel(ILogger<IndexModel> logger)
     {
