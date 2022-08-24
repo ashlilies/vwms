@@ -26,9 +26,6 @@ public class IndexModel : PageModel
 
     private readonly ILogger<IndexModel> _logger;
 
-    private static readonly string ManagerLoginRedirect = "/Survey";
-    private static readonly string ExhibitorLoginRedirect = "/Survey";
-
     public IndexModel(ILogger<IndexModel> logger)
     {
         _logger = logger;
@@ -38,12 +35,12 @@ public class IndexModel : PageModel
     {
         if (SessionUtil.AuthorizeExhibitor(HttpContext))
         {
-            return Redirect(ExhibitorLoginRedirect);
+            return Redirect(Constants.ExhibitorLoginRedirect);
         }
 
         if (SessionUtil.AuthorizeManager(HttpContext))
         {
-            return Redirect(ManagerLoginRedirect);
+            return Redirect(Constants.ManagerLoginRedirect);
         }
 
         return Page();

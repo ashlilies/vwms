@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using vwmsweb.Models;
+using vwmsweb.Utils;
 
 namespace vwmsweb.Pages
 {
@@ -20,8 +21,13 @@ namespace vwmsweb.Pages
 
         public IList<Workshop> Workshop { get;set; } = default!;
 
-        public async Task OnGetAsync()
+        public async Task<IActionResult> OnGetAsync()
         {
+            if (!SessionUtil.Authorize(HttpContext))
+            {
+                return Redirect(Constants.UnauthorizedRedirect);
+            }
+            
             if (_context.Workshops != null)
             {
                 Workshop = await _context.Workshops
@@ -31,6 +37,8 @@ namespace vwmsweb.Pages
                 .Include(w => w.Status)
                 .Include(w => w.Time).ToListAsync();
             }
+
+            return Page();
         }
     }
 }

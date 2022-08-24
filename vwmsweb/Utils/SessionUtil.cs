@@ -56,7 +56,7 @@ public static class SessionUtil
         return false;
     }
 
-    private static bool Authorize(HttpContext context)
+    public static bool Authorize(HttpContext context)
     {
         return context.Session.GetInt32("UserId") != null;
     }
