@@ -1,3 +1,4 @@
+using System.Security.Claims;
 using vwmsweb.Models;
 
 namespace vwmsweb.Services;
@@ -10,6 +11,7 @@ public class UserService
         var usernameLower = username.ToLower();  // ignore case
         var hashedPassword = HashPassword(password);
         var user = db.Users.FirstOrDefault(u => u.Username == usernameLower && u.PasswordHash == hashedPassword);
+        
         return user;
     }
 

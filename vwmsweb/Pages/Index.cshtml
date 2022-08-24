@@ -1,10 +1,32 @@
 ﻿@page
 @model IndexModel
 @{
-    ViewData["Title"] = "Home page";
+    ViewData["Title"] = "Log In";
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <h1 class="display-4">VWMS</h1>
+    <h3>Login</h3>
+    <div class="col-md-6 p-2 mx-auto">
+        <form method="post">
+            @if (Model.InvalidLoginWarning)
+            {
+                <p class="text-danger">Username or password is invalid.</p>
+            }
+
+            <div asp-validation-summary="All" class="text-danger"></div>
+
+            <label asp-for="Username" class="form-label"></label>
+            <input asp-for="Username" class="form-control mb-3"/>
+
+            <label asp-for="Password" class="form-label"></label>
+            <input asp-for="Password" class="form-control mb-3"/>
+
+            <button type="submit" class="btn btn-primary w-100">Log In</button>
+        </form>
+    </div>
 </div>
+
+@section Scripts {
+    @{ await Html.RenderPartialAsync("Shared/_ValidationScriptsPartial"); }
+}
