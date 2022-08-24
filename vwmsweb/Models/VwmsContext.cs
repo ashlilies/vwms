@@ -1,0 +1,170 @@
+﻿using System;
+using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata;
+
+namespace vwmsweb.Models
+{
+    public partial class VwmsContext : DbContext
+    {
+        public VwmsContext()
+        {
+        }
+
+        public VwmsContext(DbContextOptions<VwmsContext> options)
+            : base(options)
+        {
+        }
+
+        public virtual DbSet<Category> Categories { get; set; } = null!;
+        public virtual DbSet<Saloon> Saloons { get; set; } = null!;
+        public virtual DbSet<Status> Statuses { get; set; } = null!;
+        public virtual DbSet<Survey> Surveys { get; set; } = null!;
+        public virtual DbSet<SurveyChoice> SurveyChoices { get; set; } = null!;
+        public virtual DbSet<SurveyResponse> SurveyResponses { get; set; } = null!;
+        public virtual DbSet<Time> Times { get; set; } = null!;
+        public virtual DbSet<User> Users { get; set; } = null!;
+        public virtual DbSet<Workshop> Workshops { get; set; } = null!;
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            if (!optionsBuilder.IsConfigured)
+            {
+                var server = Environment.GetEnvironmentVariable("DB_SERVER");
+                var database = Environment.GetEnvironmentVariable("DB_NAME");
+                var userId = Environment.GetEnvironmentVariable("DB_USER");
+                var password = Environment.GetEnvironmentVariable("DB_PASSWORD");
+
+                if (server == null || database == null || userId == null || password == null)
+                {
+                    Console.Error.WriteLine("Unable to read all database environment variables!");
+                    Console.Error.WriteLine("Did you set them correctly?");
+                    Console.Error.WriteLine("Required: DB_SERVER, DB_NAME, DB_USER, DB_PASSWORD");
+                    Environment.Exit(1);
+                }
+                
+                optionsBuilder.UseSqlServer($"Server={server}; Database={database}; User Id={userId}; Password={password}");
+            }
+        }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Category>(entity =>
+            {
+                entity.ToTable("Category");
+
+                entity.Property(e => e.Name)
+                    .HasMaxLength(20)
+                    .IsFixedLength();
+            });
+
+            modelBuilder.Entity<Saloon>(entity =>
+            {
+                entity.ToTable("Saloon");
+
+                entity.Property(e => e.Name)
+                    .HasMaxLength(20)
+                    .IsFixedLength();
+            });
+
+            modelBuilder.Entity<Status>(entity =>
+            {
+                entity.ToTable("Status");
+
+                entity.Property(e => e.Name)
+                    .HasMaxLength(15)
+                    .IsFixedLength();
+            });
+
+            modelBuilder.Entity<Survey>(entity =>
+            {
+                entity.ToTable("Survey");
+
+                entity.Property(e => e.EndDate).HasColumnType("date");
+
+                entity.Property(e => e.Name)
+                    .HasMaxLength(200)
+                    .IsFixedLength();
+
+                entity.Property(e => e.StartDate).HasColumnType("date");
+            });
+
+            modelBuilder.Entity<SurveyChoice>(entity =>
+            {
+                entity.ToTable("SurveyChoice");
+
+                entity.Property(e => e.Name)
+                    .HasMaxLength(200)
+                    .IsFixedLength();
+            });
+
+            modelBuilder.Entity<SurveyResponse>(entity =>
+            {
+                entity.ToTable("SurveyResponse");
+            });
+
+            modelBuilder.Entity<Time>(entity =>
+            {
+                entity.ToTable("Time");
+            });
+
+            modelBuilder.Entity<User>(entity =>
+            {
+                entity.ToTable("User");
+
+                entity.Property(e => e.PasswordHash)
+                    .HasMaxLength(128)
+                    .IsFixedLength();
+
+                entity.Property(e => e.Username)
+                    .HasMaxLength(20)
+                    .IsFixedLength();
+            });
+
+            modelBuilder.Entity<Workshop>(entity =>
+            {
+                entity.ToTable("Workshop");
+
+                entity.Property(e => e.Date).HasColumnType("date");
+
+                entity.Property(e => e.Name)
+                    .HasMaxLength(30)
+                    .IsFixedLength();
+
+                entity.HasOne(d => d.Category)
+                    .WithMany(p => p.Workshops)
+                    .HasForeignKey(d => d.CategoryId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Workshop_Category");
+
+                entity.HasOne(d => d.Exhibitor)
+                    .WithMany(p => p.Workshops)
+                    .HasForeignKey(d => d.ExhibitorId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Workshop_User");
+
+                entity.HasOne(d => d.Saloon)
+                    .WithMany(p => p.Workshops)
+                    .HasForeignKey(d => d.SaloonId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Workshop_Saloon");
+
+                entity.HasOne(d => d.Status)
+                    .WithMany(p => p.Workshops)
+                    .HasForeignKey(d => d.StatusId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Workshop_Status");
+
+                entity.HasOne(d => d.Time)
+                    .WithMany(p => p.Workshops)
+                    .HasForeignKey(d => d.TimeId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Workshop_Time");
+            });
+
+            OnModelCreatingPartial(modelBuilder);
+        }
+
+        partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
+    }
+}
